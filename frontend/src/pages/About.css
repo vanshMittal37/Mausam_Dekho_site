@@ -1,0 +1,137 @@
+.about-page {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ── HERO ── */
+.about-hero {
+  text-align: center;
+  padding: 3.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.about-hero-icon {
+  color: #60a5fa;
+  filter: drop-shadow(0 0 14px rgba(96,165,250,0.7));
+  animation: floatIcon 4s ease-in-out infinite;
+}
+
+.about-hero h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  letter-spacing: -1px;
+}
+
+.about-hero p {
+  color: var(--text-dim);
+  font-size: 1.1rem;
+  max-width: 440px;
+  line-height: 1.6;
+}
+
+/* ── FEATURE GRID ── */
+.feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+}
+
+.feature-card {
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 0.85rem;
+}
+
+.feature-icon { color: #60a5fa; }
+
+.feature-card h3 {
+  font-size: 1.15rem;
+  font-weight: 700;
+}
+
+.feature-card p {
+  color: var(--text-dim);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* ── TECH STACK ── */
+.tech-section {
+  padding: 2.5rem 2rem;
+}
+
+.tech-section h3 {
+  text-align: center;
+  font-size: 1.5rem;
+  font-weight: 800;
+  margin-bottom: 2rem;
+  letter-spacing: -0.3px;
+}
+
+.tech-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.tech-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 1.25rem 1rem;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 14px;
+  text-align: center;
+  transition: all 0.25s ease;
+}
+
+.tech-card:hover {
+  background: rgba(255,255,255,0.14);
+  transform: translateY(-4px);
+}
+
+.tech-icon { font-size: 1.75rem; }
+
+.tech-card strong {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.tech-role {
+  font-size: 0.78rem;
+  color: var(--text-dim);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Light mode specific overrides */
+[data-theme='light'] .tech-card {
+  background: rgba(0, 0, 0, 0.04);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .tech-card:hover {
+  background: rgba(0, 0, 0, 0.07);
+}
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .feature-grid { grid-template-columns: 1fr; }
+  .tech-grid    { grid-template-columns: repeat(2, 1fr); }
+  .about-hero h2 { font-size: 2rem; }
+}
+
+@media (max-width: 420px) {
+  .tech-grid    { grid-template-columns: 1fr 1fr; }
+}

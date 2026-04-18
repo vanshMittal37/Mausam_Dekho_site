@@ -1,0 +1,194 @@
+.city-details-page {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+/* ── ACTIONS ── */
+.page-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.btn-danger {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+.btn-danger:hover {
+  background: rgba(239, 68, 68, 0.35);
+  color: #fee2e2;
+}
+
+.btn-saved {
+  background: rgba(34, 197, 94, 0.25);
+  border-color: rgba(34, 197, 94, 0.5);
+  color: #bbf7d0;
+}
+
+.spin { animation: spin 1s linear infinite; }
+
+/* ── TOAST ── */
+.save-toast {
+  text-align: center;
+  padding: 0.75rem 1.5rem;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  animation: fadeIn 0.3s ease;
+}
+
+.toast-success {
+  background: rgba(34, 197, 94, 0.2);
+  border: 1px solid rgba(34, 197, 94, 0.4);
+  color: #86efac;
+}
+
+.toast-info {
+  background: rgba(96, 165, 250, 0.2);
+  border: 1px solid rgba(96, 165, 250, 0.4);
+  color: #bfdbfe;
+}
+
+.toast-error {
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+}
+
+/* ── HERO CARD ── */
+.hero-card {
+  padding: 2.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.hero-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.city-name {
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  margin-bottom: 0.4rem;
+}
+
+.weather-cond {
+  text-transform: capitalize;
+  color: var(--text-dim);
+  font-size: 1.1rem;
+}
+
+.aqi-hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-top: 0.6rem;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  border: 1px solid;
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+
+.aqi-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.hero-icon {
+  width: 120px;
+  height: 120px;
+  filter: drop-shadow(0 0 20px rgba(255,255,255,0.35));
+}
+
+.temp-row {
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
+  flex-wrap: wrap;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.25rem;
+}
+
+.big-temp {
+  font-size: 5rem;
+  font-weight: 800;
+  letter-spacing: -3px;
+  line-height: 1;
+}
+
+.temp-range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  color: var(--text-dim);
+  font-size: 0.95rem;
+}
+
+/* ── STATS GRID ── */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+}
+
+.stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  cursor: default;
+}
+
+.stat-card:hover {
+  background: rgba(255,255,255,0.18);
+}
+
+.stat-card-icon { color: var(--text-dim); }
+.stat-card-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
+.stat-card-value { font-size: 1.15rem; font-weight: 700; color: var(--text); }
+
+/* ── LOADING / ERROR ── */
+.city-loading {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; min-height: 50vh; gap: 1.25rem;
+  color: var(--text-dim);
+}
+
+.city-error {
+  display: flex; flex-direction: column; align-items: flex-start; gap: 1.5rem;
+  max-width: 500px; margin: 0 auto;
+}
+
+.error-card { padding: 2.5rem; text-align: center; width: 100%; }
+.error-card h3 { font-size: 1.5rem; margin-bottom: 0.75rem; }
+.error-card p { color: var(--text-dim); }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 700px) {
+  .stats-grid { grid-template-columns: repeat(2, 1fr); }
+  .big-temp   { font-size: 3.75rem; }
+  .city-name  { font-size: 1.7rem; }
+  .hero-icon  { width: 90px; height: 90px; }
+  .hero-card  { padding: 1.75rem 1.25rem; }
+}
+
+@media (max-width: 420px) {
+  .stats-grid { grid-template-columns: 1fr 1fr; }
+  .hero-top   { flex-direction: column; align-items: flex-start; }
+}

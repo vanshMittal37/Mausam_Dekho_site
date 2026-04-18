@@ -1,0 +1,704 @@
+@import "tailwindcss";
+@source "../index.html";
+@source "./";
+
+@theme {
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-text: var(--text);
+  --color-text-dim: var(--text-dim);
+  --radius-2xl: var(--radius);
+}
+
+/* ============================
+   CSS VARIABLES — DESIGN TOKENS
+   ============================ */
+:root {
+  --overlay-bg: rgba(240, 244, 248, 0.30);
+  --card-bg: rgba(255, 255, 255, 0.20);
+  --card-border: rgba(255, 255, 255, 0.30);
+  --nav-bg: rgba(255, 255, 255, 0.25);
+  --text: #ffffff;
+  --text-dim: rgba(255, 255, 255, 0.70);
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --danger: #ef4444;
+  --radius: 20px;
+  --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  /* Full-width fixed navbar: 64px height + 16px breathing gap = 80px */
+  --navbar-clearance: 5rem;
+}
+
+[data-theme='dark'] {
+  --overlay-bg: rgba(10, 15, 30, 0.58);
+  --card-bg: rgba(10, 15, 30, 0.42);
+  --card-border: rgba(255, 255, 255, 0.10);
+  --nav-bg: rgba(10, 15, 30, 0.52);
+  --text: #f8fafc;
+  --text-dim: rgba(248, 250, 252, 0.65);
+}
+
+[data-theme='light'] {
+  --overlay-bg: transparent;
+  /* Clean overlay for light mode gradients */
+  --text: #1f2937;
+  --text-dim: #4b5563;
+}
+
+/* ============================
+   RESET
+   ============================ */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html,
+body {
+  min-height: 100vh;
+  /* IMPORTANT: transparent so the fixed weather-bg gradient shows through */
+  background: transparent;
+  font-family: 'Inter', sans-serif;
+  color: var(--text);
+  overflow-x: hidden;
+  transition: color 0.4s ease;
+}
+
+/* ============================
+   THEME OVERLAY
+   Sits between bg gradient and UI cards so dark/light mode is visible
+   ============================ */
+.theme-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background: var(--overlay-bg);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.6s ease;
+}
+
+/* ============================
+   ANIMATED FULL SCREEN BACKGROUND
+   ============================ */
+.weather-bg {
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  transition: background 1.2s ease;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  /* default */
+}
+
+/* LIGHT MODE BACKGROUNDS */
+[data-theme='light'] .weather-bg {
+  background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+}
+
+[data-theme='light'] .weather-bg.weather-hot {
+  background: linear-gradient(135deg, #fef08a, #7dd3fc);
+}
+
+[data-theme='light'] .weather-bg.weather-warm {
+  background: linear-gradient(135deg, #bfdbfe, #fef08a);
+}
+
+[data-theme='light'] .weather-bg.weather-clear {
+  background: linear-gradient(135deg, #bae6fd, #fde047);
+}
+
+[data-theme='light'] .weather-bg.weather-cloudy {
+  background: linear-gradient(135deg, #cbd5e1, #93c5fd);
+}
+
+[data-theme='light'] .weather-bg.weather-mist {
+  background: linear-gradient(135deg, #e2e8f0, #94a3b8);
+}
+
+[data-theme='light'] .weather-bg.weather-rain {
+  background: linear-gradient(135deg, #bfdbfe, #94a3b8);
+}
+
+[data-theme='light'] .weather-bg.weather-thunderstorm {
+  background: linear-gradient(135deg, #cbd5e1, #94a3b8);
+}
+
+[data-theme='light'] .weather-bg.weather-cold {
+  background: linear-gradient(135deg, #ddd6fe, #bfdbfe);
+}
+
+[data-theme='light'] .weather-bg.weather-snow {
+  background: linear-gradient(135deg, #f1f5f9, #cbd5e1);
+}
+
+[data-theme='light'] .weather-bg.weather-night,
+[data-theme='light'] .weather-bg.weather-night-hot,
+[data-theme='light'] .weather-bg.weather-night-warm,
+[data-theme='light'] .weather-bg.weather-night-cold,
+[data-theme='light'] .weather-bg.weather-night-rain,
+[data-theme='light'] .weather-bg.weather-night-thunderstorm,
+[data-theme='light'] .weather-bg.weather-night-snow,
+[data-theme='light'] .weather-bg.weather-night-mist,
+[data-theme='light'] .weather-bg.weather-night-cloudy {
+  /* In light mode, night skies are just muted deep slate rather than true black */
+  background: linear-gradient(135deg, #475569, #1e293b);
+}
+
+/* REGULAR BACKGROUNDS (Dark Mode / Default) */
+.weather-bg.weather-hot {
+  background: linear-gradient(135deg, #f83600 0%, #f9d423 100%);
+}
+
+.weather-bg.weather-warm {
+  background: linear-gradient(135deg, #1fa2ff 0%, #12d8fa 50%, #a6ffcb 100%);
+}
+
+.weather-bg.weather-cold {
+  background: linear-gradient(135deg, #614385 0%, #516395 100%);
+}
+
+.weather-bg.weather-rain {
+  background: linear-gradient(135deg, #2c3e50 0%, #3498db 100%);
+}
+
+.weather-bg.weather-thunderstorm {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+.weather-bg.weather-snow {
+  background: linear-gradient(135deg, #e0eafc 0%, #cfdef3 100%);
+}
+
+.weather-bg.weather-mist {
+  background: linear-gradient(135deg, #606c88 0%, #3f4c6b 100%);
+}
+
+.weather-bg.weather-cloudy {
+  background: linear-gradient(135deg, #757f9a 0%, #d7dde8 100%);
+}
+
+.weather-bg.weather-clear {
+  background: linear-gradient(135deg, #f7971e 0%, #ffd200 100%);
+}
+
+.weather-bg.weather-night {
+  background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+}
+
+.weather-bg.weather-night-hot {
+  background: linear-gradient(135deg, #1a0533 0%, #4a0e6e 50%, #7c2d12 100%);
+}
+
+.weather-bg.weather-night-warm {
+  background: linear-gradient(135deg, #0a0a2e 0%, #1e1b4b 50%, #312e81 100%);
+}
+
+.weather-bg.weather-night-cold {
+  background: linear-gradient(135deg, #0c1445 0%, #1a237e 50%, #283593 100%);
+}
+
+.weather-bg.weather-night-rain {
+  background: linear-gradient(135deg, #0d1b2a 0%, #1b3a4b 50%, #1e4d6b 100%);
+}
+
+.weather-bg.weather-night-thunderstorm {
+  background: linear-gradient(135deg, #07050f 0%, #1a1040 50%, #2d1b69 100%);
+}
+
+.weather-bg.weather-night-snow {
+  background: linear-gradient(135deg, #1a1f4b 0%, #2d3561 50%, #3d4a7a 100%);
+}
+
+.weather-bg.weather-night-mist {
+  background: linear-gradient(135deg, #1a1f2e 0%, #2d3142 50%, #3c4260 100%);
+}
+
+.weather-bg.weather-night-cloudy {
+  background: linear-gradient(135deg, #111827 0%, #1e2535 50%, #263044 100%);
+}
+
+/* ============================
+   PARTICLE / RAIN / CLOUD OVERLAYS
+   ============================ */
+.particles-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+/* Moving cloud shapes */
+.cloud-particle {
+  position: absolute;
+  border-radius: 50px;
+  background: rgba(255, 255, 255, 0.07);
+  filter: blur(8px);
+  animation: floatCloud linear infinite;
+}
+
+@keyframes floatCloud {
+  from {
+    transform: translateX(-200px);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  90% {
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(120vw);
+    opacity: 0;
+  }
+}
+
+/* Falling rain drops */
+.rain-drop {
+  position: absolute;
+  top: -20px;
+  width: 2px;
+  background: linear-gradient(to bottom, transparent, rgba(180, 220, 255, 0.8));
+  border-radius: 2px;
+  animation: rainFall linear infinite;
+}
+
+@keyframes rainFall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
+  }
+}
+
+/* Snowflakes */
+.snow-flake {
+  position: absolute;
+  top: -20px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  animation: snowFall linear infinite;
+}
+
+@keyframes snowFall {
+  to {
+    transform: translateY(110vh) rotate(360deg);
+    opacity: 0.2;
+  }
+}
+
+/* Stars for night */
+.star {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+  animation: twinkle ease-in-out infinite;
+}
+
+@keyframes twinkle {
+
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: scale(1);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1.5);
+  }
+}
+
+/* ============================
+   APP CONTAINER
+   ============================ */
+.app-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================
+   NAVBAR
+   ============================ */
+.glass-nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--card-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='light'] .glass-nav {
+  background: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* ============================
+   GLASSMORPHISM CARD
+   ============================ */
+/* Premium Glassmorphism Utilities */
+.glass {
+  background: var(--card-bg);
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+  border: 1px solid var(--card-border);
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.glass:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.2);
+}
+
+/* Light mode: stronger white glass */
+[data-theme='light'] .glass {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-color: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.7);
+  color: var(--text);
+}
+
+[data-theme='light'] .glass:hover {
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.12), inset 0 1px 0 rgba(255, 255, 255, 0.9);
+}
+
+/* Dark mode: deeper dark glass */
+[data-theme='dark'] .glass {
+  background: rgba(10, 15, 30, 0.45);
+  border-color: rgba(255, 255, 255, 0.08);
+  color: #f8fafc;
+}
+
+/* ============================
+   LAYOUT HELPERS
+   ============================ */
+.container {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+.main-content {
+  flex: 1;
+  padding: var(--navbar-clearance) 1.5rem 2.5rem;
+}
+
+/* ============================
+   TYPOGRAPHY
+   ============================ */
+h1,
+h2,
+h3,
+h4 {
+  font-weight: 700;
+  color: var(--text);
+}
+
+[data-theme='light'] h1,
+[data-theme='light'] h2,
+[data-theme='light'] h3,
+[data-theme='light'] h4 {
+  font-weight: 800;
+  color: #111827;
+  letter-spacing: -0.5px;
+}
+
+p {
+  color: var(--text-dim);
+}
+
+/* ============================
+   BUTTONS
+   ============================ */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.625rem 1.25rem;
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.btn:hover {
+  background: rgba(255, 255, 255, 0.25);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border-color: transparent;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: var(--primary-hover);
+}
+
+.btn-icon {
+  padding: 0.5rem;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-icon:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+/* Light mode buttons */
+[data-theme='light'] .btn {
+  background: rgba(255, 255, 255, 0.85);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1f2937;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+[data-theme='light'] .btn:hover {
+  background: #ffffff;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .btn-primary {
+  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  color: white;
+  border-color: transparent;
+}
+
+[data-theme='light'] .btn-primary:hover {
+  background: linear-gradient(135deg, #60a5fa, #3b82f6);
+  box-shadow: 0 6px 20px rgba(59, 130, 246, 0.4);
+}
+
+[data-theme='light'] .btn-icon {
+  background: rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  color: #1f2937;
+}
+
+[data-theme='light'] .btn-icon:hover {
+  background: white;
+}
+
+/* ============================
+   INPUT FIELD
+   ============================ */
+.input-field {
+  width: 100%;
+  padding: 0.85rem 1.25rem;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.15);
+  color: var(--text);
+  font-family: inherit;
+  font-size: 1rem;
+  outline: none;
+  backdrop-filter: blur(10px);
+  transition: var(--transition);
+}
+
+.input-field::placeholder {
+  color: var(--text-dim);
+}
+
+.input-field:focus {
+  border-color: var(--primary);
+  background: rgba(255, 255, 255, 0.22);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Light mode input */
+[data-theme='light'] .input-field {
+  background: rgba(255, 255, 255, 0.5);
+  border-color: rgba(0, 0, 0, 0.15);
+  color: #1e293b;
+}
+
+[data-theme='light'] .input-field::placeholder {
+  color: rgba(30, 41, 59, 0.45);
+}
+
+/* ============================
+   LOADING SKELETON
+   ============================ */
+.skeleton {
+  background: linear-gradient(90deg,
+      rgba(255, 255, 255, 0.08) 25%,
+      rgba(255, 255, 255, 0.18) 50%,
+      rgba(255, 255, 255, 0.08) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 10px;
+}
+
+[data-theme='light'] .skeleton {
+  background: linear-gradient(90deg,
+      rgba(0, 0, 0, 0.06) 25%,
+      rgba(0, 0, 0, 0.12) 50%,
+      rgba(0, 0, 0, 0.06) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: 200% 0;
+  }
+
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+.skeleton-card {
+  padding: 2rem;
+  border-radius: var(--radius);
+}
+
+/* ============================
+   LOADER SPINNER
+   ============================ */
+.loader {
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  border-top: 3px solid white;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 0.8s linear infinite;
+  margin: 0 auto;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* ============================
+   FADE IN ANIMATION
+   ============================ */
+.fade-in {
+  animation: fadeIn 0.6s ease both;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* ============================
+   GRID HELPERS
+   ============================ */
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-cols-1 {
+  grid-template-columns: 1fr;
+}
+
+@media (min-width: 600px) {
+  .sm\:grid-cols-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 960px) {
+  .lg\:grid-cols-3 {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .lg\:grid-cols-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ============================
+   WEATHER ICON ANIMATIONS
+   ============================ */
+.icon-sun {
+  animation: rotateSun 12s linear infinite;
+  filter: drop-shadow(0 0 12px rgba(255, 220, 0, 0.7));
+}
+
+@keyframes rotateSun {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-cloud {
+  animation: floatIcon 4s ease-in-out infinite;
+}
+
+@keyframes floatIcon {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  50% {
+    transform: translateX(8px);
+  }
+}
+
+.icon-rain {
+  animation: swingIcon 2.5s ease-in-out infinite;
+}
+
+@keyframes swingIcon {
+
+  0%,
+  100% {
+    transform: rotate(-5deg);
+  }
+
+  50% {
+    transform: rotate(5deg);
+  }
+}
