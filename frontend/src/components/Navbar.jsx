@@ -157,58 +157,68 @@ const Navbar = ({ theme, toggleTheme }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex-1 px-4 py-8 overflow-y-auto">
+        <div className="flex-1 px-5 py-10 overflow-y-auto">
           {/* Main Menu Section */}
-          <div className="flex flex-col gap-2">
-            <span className="px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.2em] opacity-40 mb-2">Navigation</span>
-            {NAV_LINKS.map(({ name, path, icon: Icon }) => (
-              <Link key={path} to={path} className={getDrawerLinkClass(path)}>
-                <div className={`p-2 rounded-lg transition-colors ${isActive(path) ? 'bg-white/20' : 'bg-transparent'}`}>
-                  <Icon size={20} strokeWidth={2.5} />
-                </div>
-                <span className="flex-1">{name}</span>
-              </Link>
-            ))}
+          <div className="flex flex-col gap-3 mb-10">
+            <span className="px-4 py-1 text-[12px] font-bold uppercase tracking-[0.25em] text-blue-500/80 mb-4 ml-1">
+              Navigation
+            </span>
+            <div className="flex flex-col gap-2">
+              {NAV_LINKS.map(({ name, path, icon: Icon }) => (
+                <Link key={path} to={path} className={getDrawerLinkClass(path)}>
+                  <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive(path) ? 'bg-white/25 shadow-sm' : 'bg-transparent group-hover:bg-white/10'}`}>
+                    <Icon size={22} strokeWidth={2.5} />
+                  </div>
+                  <span className="flex-1 ml-1">{name}</span>
+                </Link>
+              ))}
+            </div>
           </div>
 
-          <div className={`my-8 mx-4 border-t ${isLight ? 'border-slate-100' : 'border-white/5'}`} />
+          <div className={`my-10 mx-6 border-t ${isLight ? 'border-slate-100' : 'border-white/5'}`} />
 
           {/* Configuration Section */}
-          <div className="flex flex-col gap-2">
-            <span className="px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.2em] opacity-40 mb-2">Configuration</span>
-            <Link to="/settings" className={getDrawerLinkClass('/settings')}>
-              <div className={`p-2 rounded-lg transition-colors ${isActive('/settings') ? 'bg-white/20' : 'bg-transparent'}`}>
-                <Settings size={20} strokeWidth={2.5} />
+          <div className="flex flex-col gap-3 mb-10">
+            <span className="px-4 py-1 text-[12px] font-bold uppercase tracking-[0.25em] text-blue-500/80 mb-4 ml-1">
+              Configuration
+            </span>
+            <div className="flex flex-col gap-3">
+              <Link to="/settings" className={getDrawerLinkClass('/settings')}>
+                <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive('/settings') ? 'bg-white/25 shadow-sm' : 'bg-transparent group-hover:bg-white/10'}`}>
+                  <Settings size={22} strokeWidth={2.5} />
+                </div>
+                <span className="flex-1 ml-1">Dashboard Settings</span>
+              </Link>
+              
+              <div className="mt-4">
+                <button
+                  onClick={toggleTheme}
+                  className={`flex items-center justify-between w-full px-5 py-5 rounded-2xl text-[16px] font-bold transition-all duration-300 group ${
+                    isLight
+                      ? 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/50 shadow-sm'
+                      : 'bg-white/5 text-slate-200 hover:bg-white/10 border border-white/5 shadow-inner'
+                  }`}
+                >
+                  <div className="flex items-center gap-4">
+                    <div className={`p-2 rounded-lg ${isLight ? 'bg-white shadow-sm' : 'bg-white/5'}`}>
+                      {isLight ? <Moon size={20} className="text-blue-600" /> : <Sun size={20} className="text-amber-400" />}
+                    </div>
+                    <span>{isLight ? 'Dark Mode' : 'Light Mode'}</span>
+                  </div>
+                  <div className={`w-12 h-7 rounded-full transition-all duration-500 flex items-center px-1.5 ${isLight ? 'bg-slate-300' : 'bg-blue-600 shadow-lg shadow-blue-500/20'}`}>
+                    <div className={`w-4 h-4 rounded-full bg-white shadow-lg transition-transform duration-500 cubic-bezier(0.34, 1.56, 0.64, 1) ${
+                      isLight ? 'translate-x-0' : 'translate-x-5'
+                    }`} />
+                  </div>
+                </button>
               </div>
-              <span className="flex-1">App Settings</span>
-            </Link>
-            
-            <div className="px-4 mt-4">
-              <button
-                onClick={toggleTheme}
-                className={`flex items-center justify-between w-full px-5 py-4 rounded-2xl text-[15px] font-bold transition-all duration-300 ${
-                  isLight
-                    ? 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-100'
-                    : 'bg-white/5 text-slate-200 hover:bg-white/10 border border-white/5'
-                }`}
-              >
-                <div className="flex items-center gap-3">
-                  {isLight ? <Moon size={18} className="text-blue-600" /> : <Sun size={18} className="text-amber-400" />}
-                  <span>{isLight ? 'Dark Appearance' : 'Light Appearance'}</span>
-                </div>
-                <div className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${isLight ? 'bg-slate-300' : 'bg-blue-600'}`}>
-                  <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300 ${
-                    isLight ? 'translate-x-0' : 'translate-x-4'
-                  }`} />
-                </div>
-              </button>
             </div>
           </div>
         </div>
         
         {/* Footer info or version */}
-        <div className="p-6 text-[10px] font-bold uppercase tracking-widest opacity-20 text-center border-t border-white/5">
-          Weather Deck • v1.2.0
+        <div className="p-8 text-[11px] font-bold uppercase tracking-[0.3em] opacity-30 text-center border-t border-white/5 bg-black/5">
+          Vansh Mittal • v1.2.0
         </div>
       </div>
     </header>
