@@ -48,13 +48,7 @@
 /* ============================
    RESET
    ============================ */
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+/* Removed aggressive reset to allow Tailwind Preflight to manage spacing */
 
 html,
 body {

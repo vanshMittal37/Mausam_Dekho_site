@@ -1,5 +1,5 @@
-import React from 'react';
-import { Settings as SettingsIcon, RotateCcw, Thermometer, Wind, Gauge } from 'lucide-react';
+import React, { useState } from 'react';
+import { Settings as SettingsIcon, RotateCcw, Thermometer, Wind, Gauge, Check, Info } from 'lucide-react';
 import { useSettings } from '../context/SettingsContext';
 
 const Settings = () => {
@@ -10,116 +10,188 @@ const Settings = () => {
     resetToDefault
   } = useSettings();
 
-  const getToggleClass = (isActive, colorName) => {
-    const base = "flex flex-1 justify-center items-center py-3.5 px-4 rounded-xl font-bold transition-all duration-300 border backdrop-blur-md";
-    if (isActive) {
-      if (colorName === 'blue') return `${base} bg-blue-500 border-blue-500 text-white shadow-lg shadow-blue-500/30 scale-[#1.02] z-10`;
-      if (colorName === 'sky') return `${base} bg-sky-500 border-sky-500 text-white shadow-lg shadow-sky-500/30 scale-[#1.02] z-10`;
-      if (colorName === 'purple') return `${base} bg-purple-500 border-purple-500 text-white shadow-lg shadow-purple-500/30 scale-[#1.02] z-10`;
+  const [showSaveIndicator, setShowSaveIndicator] = useState(false);
+
+  const handleSettingChange = (settingType, value) => {
+    switch(settingType) {
+      case 'temperature':
+        setTempUnit(value);
+        break;
+      case 'wind':
+        setWindUnit(value);
+        break;
+      case 'pressure':
+        setPressureUnit(value);
+        break;
     }
-    return `${base} border-[var(--card-border)] bg-[var(--card-bg)] hover:brightness-125 opacity-70 hover:opacity-100`;
+    
+    setShowSaveIndicator(true);
+    setTimeout(() => setShowSaveIndicator(false), 2000);
   };
 
-  return (
-    <div className="w-full max-w-4xl mx-auto px-4 py-3 animate-[fadeIn_0.5s_ease-out]">
-      <div className="mb-6 text-left flex flex-col sm:flex-row items-center gap-4">
-        <div className="p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--card-border)] shadow-md backdrop-blur-lg flex-shrink-0">
-           <SettingsIcon size={32} className="text-blue-500" strokeWidth={2.5} />
+  const getToggleClass = (isActive, colorName) => {
+    const base = "flex-1 flex items-center justify-center py-3 sm:py-4 px-3 sm:px-4 lg:px-6 rounded-xl font-semibold transition-all duration-300 border-2 cursor-pointer backdrop-blur-md";
+    if (isActive) {
+      if (colorName === 'blue') return `${base} bg-blue-500 border-blue-400 text-white shadow-xl shadow-blue-500/40 scale-105 z-10`;
+      if (colorName === 'sky') return `${base} bg-sky-500 border-sky-400 text-white shadow-xl shadow-sky-500/40 scale-105 z-10`;
+      if (colorName === 'purple') return `${base} bg-purple-500 border-purple-400 text-white shadow-xl shadow-purple-500/40 scale-105 z-10`;
+    }
+    return `${base} border-gray-300/50 bg-white/90 hover:bg-white hover:border-gray-400 hover:shadow-lg hover:scale-102 opacity-90 hover:opacity-100`;
+  };
+
+  const SettingCard = ({ icon, iconColor, title, description, children, category, bgColor }) => (
+    <div className={`relative rounded-3xl p-5 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:scale-[1.03] ${bgColor} border-2 border-white/20 backdrop-blur-xl h-full flex flex-col`}>
+      {/* Decorative top border */}
+      <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-3xl bg-gradient-to-r ${iconColor}`}></div>
+      
+      <div className="flex flex-col items-center gap-3 mb-4 text-center">
+        <div className={`p-3 rounded-xl bg-gradient-to-br ${iconColor} shadow-lg flex-shrink-0 ring-2 ring-white/20`}>
+          {React.cloneElement(icon, { size: 24 })}
         </div>
         <div>
-          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h2>
-          <p className="text-sm sm:text-[15px] opacity-60 font-medium">Customize your weather dashboard metrics.</p>
+          <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">{title}</h3>
+          <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 border border-gray-200 text-gray-500 font-bold">
+            {category}
+          </span>
         </div>
       </div>
+      
+      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 text-center px-2 flex-grow">{description}</p>
+      
+      <div className="mt-auto">
+        {children}
+      </div>
+    </div>
+  );
 
-      <div className="flex flex-col gap-6">
+  return (
+    <div className="w-full max-w-5xl mx-auto px-4 py-6 animate-[fadeIn_0.5s_ease-out]">
+      {/* Header */}
+      <div className="mb-8 text-center">
+        <div className="inline-flex items-center justify-center p-4 rounded-2xl bg-gradient-to-br from-blue-500/20 to-purple-500/20 border border-[var(--card-border)] shadow-lg backdrop-blur-lg mb-4">
+          <SettingsIcon size={36} className="text-blue-400" strokeWidth={2.5} />
+        </div>
+        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-2">Settings</h1>
+        <p className="text-base opacity-70 max-w-md mx-auto">
+          Customize your weather experience with personalized units and preferences
+        </p>
+      </div>
+
+      {/* Save Indicator */}
+      {showSaveIndicator && (
+        <div className="fixed top-4 right-4 flex items-center gap-2 px-4 py-2 rounded-xl bg-green-500/20 border border-green-500/30 text-green-400 shadow-lg backdrop-blur-md z-50 animate-[fadeIn_0.3s_ease-out]">
+          <Check size={16} strokeWidth={2.5} />
+          <span className="text-sm font-medium">Settings saved</span>
+        </div>
+      )}
+
+      {/* Settings Categories */}
+      <div className="flex flex-wrap justify-center gap-6">
         
         {/* TEMPERATURE CARD */}
-        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group">
-          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
-            <Thermometer size={22} strokeWidth={2.5} className="text-blue-500" />
-            <h3 className="text-lg font-bold">Temperature</h3>
-          </div>
-          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
-            Choose between Metric or Imperial units for temperature mapping.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-3">
-            <button
-              className={getToggleClass(tempUnit === 'C', 'blue')}
-              onClick={() => setTempUnit('C')}
-            >
-              Celsius (°C)
-            </button>
-            <button
-              className={getToggleClass(tempUnit === 'F', 'blue')}
-              onClick={() => setTempUnit('F')}
-            >
-              Fahrenheit (°F)
-            </button>
-          </div>
+        <div className="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] min-w-[280px]">
+          <SettingCard
+            icon={<Thermometer strokeWidth={2.5} className="text-white" />}
+            iconColor="from-blue-500 to-blue-600"
+            title="Temperature"
+            description="Choose your preferred temperature unit"
+            category="Units"
+            bgColor="bg-gradient-to-br from-blue-50/90 to-blue-100/90"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              <div
+                className={getToggleClass(tempUnit === 'C', 'blue')}
+                onClick={() => handleSettingChange('temperature', 'C')}
+              >
+                <span className="font-bold">°C</span>
+              </div>
+              <div
+                className={getToggleClass(tempUnit === 'F', 'blue')}
+                onClick={() => handleSettingChange('temperature', 'F')}
+              >
+                <span className="font-bold">°F</span>
+              </div>
+            </div>
+          </SettingCard>
         </div>
 
         {/* WIND SPEED CARD */}
-        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group">
-          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
-            <Wind size={22} strokeWidth={2.5} className="text-sky-500" />
-            <h3 className="text-lg font-bold">Wind Speed</h3>
-          </div>
-          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
-            Adjust how wind forces are displayed globally.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-3">
-            <button
-              className={getToggleClass(windUnit === 'm/s', 'sky')}
-              onClick={() => setWindUnit('m/s')}
-            >
-              Meters / Sec (m/s)
-            </button>
-            <button
-              className={getToggleClass(windUnit === 'km/h', 'sky')}
-              onClick={() => setWindUnit('km/h')}
-            >
-               km/h
-            </button>
-          </div>
+        <div className="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] min-w-[280px]">
+          <SettingCard
+            icon={<Wind strokeWidth={2.5} className="text-white" />}
+            iconColor="from-sky-500 to-sky-600"
+            title="Wind Speed"
+            description="Select wind speed measurement units"
+            category="Units"
+            bgColor="bg-gradient-to-br from-sky-50/90 to-sky-100/90"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              <div
+                className={getToggleClass(windUnit === 'm/s', 'sky')}
+                onClick={() => handleSettingChange('wind', 'm/s')}
+              >
+                <span className="font-bold text-sm">m/s</span>
+              </div>
+              <div
+                className={getToggleClass(windUnit === 'km/h', 'sky')}
+                onClick={() => handleSettingChange('wind', 'km/h')}
+              >
+                <span className="font-bold text-sm">km/h</span>
+              </div>
+            </div>
+          </SettingCard>
         </div>
 
         {/* ATMOSPHERIC PRESSURE CARD */}
-        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group mb-4">
-          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
-            <Gauge size={22} strokeWidth={2.5} className="text-purple-500" />
-            <h3 className="text-lg font-bold">Atmospheric Pressure</h3>
-          </div>
-          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
-            Define base reporting mappings for barometric pressure.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-3">
-            <button
-              className={getToggleClass(pressureUnit === 'hPa', 'purple')}
-              onClick={() => setPressureUnit('hPa')}
-            >
-              Hectopascal (hPa)
-            </button>
-            <button
-              className={getToggleClass(pressureUnit === 'atm', 'purple')}
-              onClick={() => setPressureUnit('atm')}
-            >
-              Atmosphere (atm)
-            </button>
-          </div>
+        <div className="w-full md:w-[calc(50%-1.5rem)] lg:w-[calc(25%-1.5rem)] min-w-[280px]">
+          <SettingCard
+            icon={<Gauge strokeWidth={2.5} className="text-white" />}
+            iconColor="from-purple-500 to-purple-600"
+            title="Pressure"
+            description="Choose barometric pressure unit"
+            category="Units"
+            bgColor="bg-gradient-to-br from-purple-50/90 to-purple-100/90"
+          >
+            <div className="grid grid-cols-2 gap-2">
+              <div
+                className={getToggleClass(pressureUnit === 'hPa', 'purple')}
+                onClick={() => handleSettingChange('pressure', 'hPa')}
+              >
+                <span className="font-bold text-sm">hPa</span>
+              </div>
+              <div
+                className={getToggleClass(pressureUnit === 'atm', 'purple')}
+                onClick={() => handleSettingChange('pressure', 'atm')}
+              >
+                <span className="font-bold text-sm">atm</span>
+              </div>
+            </div>
+          </SettingCard>
         </div>
       </div>
 
-      <div className="mt-8 mb-6 flex items-center justify-center">
+      {/* Reset Section */}
+      <div className="mt-6 sm:mt-8 p-4 sm:p-6 rounded-2xl border border-red-500/20 bg-red-500/5 backdrop-blur-sm">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 mb-3">
+          <Info size={window.innerWidth < 640 ? 18 : 20} className="text-red-400 flex-shrink-0" strokeWidth={2} />
+          <h3 className="text-base sm:text-lg font-semibold">Reset Settings</h3>
+        </div>
+        <p className="text-xs sm:text-sm opacity-70 mb-4">
+          Restore all settings to their default values. This action cannot be undone.
+        </p>
         <button 
-          className="w-full sm:w-auto flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm transition-all duration-300 bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 py-2.5 px-5 rounded-xl font-medium text-sm transition-all duration-300 bg-red-500/10 text-red-400 border border-red-500/20 hover:bg-red-500 hover:text-white hover:border-red-500"
           onClick={resetToDefault}
         >
-          <RotateCcw size={18} strokeWidth={2.5} /> 
-          Reset Default Settings
+          <RotateCcw size={16} strokeWidth={2.5} /> 
+          Reset to Default Settings
         </button>
       </div>
-    </div>
+
+      {/* Footer Info */}
+      <div className="mt-8 text-center text-xs opacity-50">
+        <p>Settings are automatically saved and applied immediately</p>
+      </div>
     </div>
   );
 };
