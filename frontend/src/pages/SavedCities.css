@@ -214,6 +214,35 @@
 
 [data-theme='light'] .stat-badge { background: rgba(0,0,0,0.05); }
 
+/* Dark mode overrides for saved city cards */
+[data-theme='dark'] .city-card {
+  background: rgba(10, 15, 30, 0.50);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+[data-theme='dark'] .city-card-name {
+  color: #f8fafc;
+}
+
+[data-theme='dark'] .city-card-country {
+  color: rgba(255, 255, 255, 0.65);
+}
+
+[data-theme='dark'] .stat-badge {
+  background: rgba(255, 255, 255, 0.10);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+[data-theme='dark'] .city-card-footer {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='dark'] .weather-badge {
+  background: rgba(96, 165, 250, 0.20);
+  color: #93c5fd;
+  border-color: rgba(96, 165, 250, 0.35);
+}
+
 /* ── AQI BADGE ── */
 .aqi-badge {
   display: flex;

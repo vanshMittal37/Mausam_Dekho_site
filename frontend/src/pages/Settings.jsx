@@ -36,11 +36,11 @@ const Settings = () => {
       if (colorName === 'sky') return `${base} bg-sky-500 border-sky-400 text-white shadow-xl shadow-sky-500/40 scale-105 z-10`;
       if (colorName === 'purple') return `${base} bg-purple-500 border-purple-400 text-white shadow-xl shadow-purple-500/40 scale-105 z-10`;
     }
-    return `${base} border-gray-300/50 bg-white/90 hover:bg-white hover:border-gray-400 hover:shadow-lg hover:scale-102 opacity-90 hover:opacity-100`;
+    return `${base} border-gray-300/50 dark:border-gray-600/50 bg-white/90 dark:bg-white/10 hover:bg-white dark:hover:bg-white/15 hover:border-gray-400 dark:hover:border-gray-500 hover:shadow-lg hover:scale-102 opacity-90 hover:opacity-100 text-gray-800 dark:text-gray-200`;
   };
 
   const SettingCard = ({ icon, iconColor, title, description, children, category, bgColor }) => (
-    <div className={`relative rounded-3xl p-5 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:scale-[1.03] ${bgColor} border-2 border-white/20 backdrop-blur-xl h-full flex flex-col`}>
+    <div className={`relative rounded-3xl p-5 sm:p-6 shadow-2xl hover:shadow-3xl transition-all duration-500 group hover:scale-[1.03] ${bgColor} border-2 border-white/20 dark:border-white/10 backdrop-blur-xl h-full flex flex-col`}>
       {/* Decorative top border */}
       <div className={`absolute top-0 left-0 right-0 h-1 rounded-t-3xl bg-gradient-to-r ${iconColor}`}></div>
       
@@ -49,14 +49,14 @@ const Settings = () => {
           {React.cloneElement(icon, { size: 24 })}
         </div>
         <div>
-          <h3 className="text-lg sm:text-xl font-bold text-gray-800 mb-1">{title}</h3>
-          <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 border border-gray-200 text-gray-500 font-bold">
+          <h3 className="text-lg sm:text-xl font-bold text-gray-800 dark:text-gray-100 mb-1">{title}</h3>
+          <span className="text-[10px] uppercase tracking-wider px-2 py-0.5 rounded-full bg-white/80 dark:bg-white/10 border border-gray-200 dark:border-gray-600 text-gray-500 dark:text-gray-300 font-bold">
             {category}
           </span>
         </div>
       </div>
       
-      <p className="text-xs sm:text-sm text-gray-600 leading-relaxed mb-4 text-center px-2 flex-grow">{description}</p>
+      <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-300 leading-relaxed mb-4 text-center px-2 flex-grow">{description}</p>
       
       <div className="mt-auto">
         {children}
@@ -96,7 +96,7 @@ const Settings = () => {
             title="Temperature"
             description="Choose your preferred temperature unit"
             category="Units"
-            bgColor="bg-gradient-to-br from-blue-50/90 to-blue-100/90"
+            bgColor="bg-gradient-to-br from-blue-50/90 to-blue-100/90 dark:from-blue-950/60 dark:to-blue-900/60"
           >
             <div className="grid grid-cols-2 gap-2">
               <div
@@ -123,7 +123,7 @@ const Settings = () => {
             title="Wind Speed"
             description="Select wind speed measurement units"
             category="Units"
-            bgColor="bg-gradient-to-br from-sky-50/90 to-sky-100/90"
+            bgColor="bg-gradient-to-br from-sky-50/90 to-sky-100/90 dark:from-sky-950/60 dark:to-sky-900/60"
           >
             <div className="grid grid-cols-2 gap-2">
               <div
@@ -150,7 +150,7 @@ const Settings = () => {
             title="Pressure"
             description="Choose barometric pressure unit"
             category="Units"
-            bgColor="bg-gradient-to-br from-purple-50/90 to-purple-100/90"
+            bgColor="bg-gradient-to-br from-purple-50/90 to-purple-100/90 dark:from-purple-950/60 dark:to-purple-900/60"
           >
             <div className="grid grid-cols-2 gap-2">
               <div

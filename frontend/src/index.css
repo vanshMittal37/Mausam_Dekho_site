@@ -10,6 +10,8 @@
   --radius-2xl: var(--radius);
 }
 
+@custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
 /* ============================
    CSS VARIABLES — DESIGN TOKENS
    ============================ */
@@ -377,9 +379,11 @@ body {
 
 /* Dark mode: deeper dark glass */
 [data-theme='dark'] .glass {
-  background: rgba(10, 15, 30, 0.45);
-  border-color: rgba(255, 255, 255, 0.08);
+  background: rgba(10, 15, 30, 0.55);
+  border-color: rgba(255, 255, 255, 0.10);
   color: #f8fafc;
+  backdrop-filter: blur(28px);
+  -webkit-backdrop-filter: blur(28px);
 }
 
 /* ============================

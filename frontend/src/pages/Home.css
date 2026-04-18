@@ -66,6 +66,22 @@
   transform: translateY(-2px);
 }
 
+[data-theme='dark'] .quick-city-btn {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.18);
+  color: #f1f5f9;
+}
+
+[data-theme='light'] .quick-city-btn {
+  background: rgba(0, 0, 0, 0.06);
+  border-color: rgba(0, 0, 0, 0.12);
+  color: #1f2937;
+}
+
+[data-theme='light'] .quick-city-btn:hover {
+  background: rgba(0, 0, 0, 0.10);
+}
+
 /* ── LOCATION DENIED ── */
 .location-denied-card {
   display: flex;
@@ -218,6 +234,34 @@
 .stat-icon { color: var(--text-dim); }
 .stat-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
 .stat-value { font-size: 1.1rem; font-weight: 700; color: var(--text); }
+
+/* Dark mode stat-box: boost contrast */
+[data-theme='dark'] .stat-box {
+  background: rgba(255, 255, 255, 0.10);
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='dark'] .stat-box:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+[data-theme='dark'] .stat-icon { color: rgba(255, 255, 255, 0.75); }
+[data-theme='dark'] .stat-label { color: rgba(255, 255, 255, 0.70); }
+[data-theme='dark'] .stat-value { color: #ffffff; }
+
+/* Light mode stat-box */
+[data-theme='light'] .stat-box {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .stat-box:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .stat-icon { color: #4b5563; }
+[data-theme='light'] .stat-label { color: #6b7280; }
+[data-theme='light'] .stat-value { color: #111827; }
 
 /* ── DETAILS BUTTON ── */
 .details-btn {

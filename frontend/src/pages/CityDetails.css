@@ -163,6 +163,43 @@
 .stat-card-label { font-size: 0.8rem; color: var(--text-dim); text-transform: uppercase; letter-spacing: 0.5px; }
 .stat-card-value { font-size: 1.15rem; font-weight: 700; color: var(--text); }
 
+/* Dark mode stat cards: boost visibility */
+[data-theme='dark'] .stat-card {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.10);
+}
+
+[data-theme='dark'] .stat-card:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+[data-theme='dark'] .stat-card-icon { color: rgba(255, 255, 255, 0.70); }
+[data-theme='dark'] .stat-card-label { color: rgba(255, 255, 255, 0.65); }
+[data-theme='dark'] .stat-card-value { color: #ffffff; }
+
+/* Light mode stat cards */
+[data-theme='light'] .stat-card {
+  background: rgba(0, 0, 0, 0.04);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+[data-theme='light'] .stat-card:hover {
+  background: rgba(0, 0, 0, 0.08);
+}
+
+[data-theme='light'] .stat-card-icon { color: #4b5563; }
+[data-theme='light'] .stat-card-label { color: #6b7280; }
+[data-theme='light'] .stat-card-value { color: #111827; }
+
+/* Dark mode temp row border */
+[data-theme='dark'] .temp-row {
+  border-top-color: rgba(255, 255, 255, 0.12);
+}
+
+[data-theme='light'] .temp-row {
+  border-top-color: rgba(0, 0, 0, 0.08);
+}
+
 /* ── LOADING / ERROR ── */
 .city-loading {
   display: flex; flex-direction: column; align-items: center;
