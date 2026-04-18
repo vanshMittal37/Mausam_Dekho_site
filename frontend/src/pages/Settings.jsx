@@ -21,31 +21,29 @@ const Settings = () => {
   };
 
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 sm:px-6 py-6 animate-[fadeIn_0.5s_ease-out]">
-      <div className="mb-8 md:mb-12 text-center md:text-left flex flex-col md:flex-row items-center gap-5">
-        <div className="p-4 rounded-2xl bg-[var(--card-bg)] border border-[var(--card-border)] shadow-md backdrop-blur-lg">
-           <SettingsIcon size={40} className="text-blue-500" strokeWidth={2.5} />
+    <div className="w-full max-w-4xl mx-auto px-4 py-3 animate-[fadeIn_0.5s_ease-out]">
+      <div className="mb-6 text-left flex flex-col sm:flex-row items-center gap-4">
+        <div className="p-3 rounded-2xl bg-[var(--card-bg)] border border-[var(--card-border)] shadow-md backdrop-blur-lg flex-shrink-0">
+           <SettingsIcon size={32} className="text-blue-500" strokeWidth={2.5} />
         </div>
         <div>
-          <h2 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-2">Settings</h2>
-          <p className="text-base sm:text-lg opacity-80 font-medium">Customize your weather dashboard metrics.</p>
+          <h2 className="text-2xl sm:text-3xl font-bold tracking-tight">Settings</h2>
+          <p className="text-sm sm:text-[15px] opacity-60 font-medium">Customize your weather dashboard metrics.</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
+      <div className="flex flex-col gap-6">
         
         {/* TEMPERATURE CARD */}
-        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 shadow-xl group hover:-translate-y-1 transition-transform duration-300">
-          <div className="flex items-center gap-4 border-b border-[var(--card-border)] pb-5">
-            <div className="p-3.5 rounded-xl bg-blue-500/15 text-blue-500 ring-1 ring-blue-500/30 group-hover:bg-blue-500 group-hover:text-white transition-colors duration-300 shadow-inner">
-              <Thermometer size={26} strokeWidth={2.5} />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold">Temperature</h3>
+        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group">
+          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
+            <Thermometer size={22} strokeWidth={2.5} className="text-blue-500" />
+            <h3 className="text-lg font-bold">Temperature</h3>
           </div>
-          <p className="text-[15px] sm:text-base opacity-75 leading-relaxed min-h-[48px] font-medium">
-            Choose between Metric or Imperial units for temperature mapping everywhere.
+          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
+            Choose between Metric or Imperial units for temperature mapping.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 mt-3">
             <button
               className={getToggleClass(tempUnit === 'C', 'blue')}
               onClick={() => setTempUnit('C')}
@@ -62,17 +60,15 @@ const Settings = () => {
         </div>
 
         {/* WIND SPEED CARD */}
-        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 shadow-xl group hover:-translate-y-1 transition-transform duration-300">
-          <div className="flex items-center gap-4 border-b border-[var(--card-border)] pb-5">
-            <div className="p-3.5 rounded-xl bg-sky-500/15 text-sky-500 ring-1 ring-sky-500/30 group-hover:bg-sky-500 group-hover:text-white transition-colors duration-300 shadow-inner">
-              <Wind size={26} strokeWidth={2.5} />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold">Wind Speed</h3>
+        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group">
+          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
+            <Wind size={22} strokeWidth={2.5} className="text-sky-500" />
+            <h3 className="text-lg font-bold">Wind Speed</h3>
           </div>
-          <p className="text-[15px] sm:text-base opacity-75 leading-relaxed min-h-[48px] font-medium">
+          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
             Adjust how wind forces are displayed globally.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-auto pt-2">
+          <div className="flex flex-col sm:flex-row gap-3 mt-3">
             <button
               className={getToggleClass(windUnit === 'm/s', 'sky')}
               onClick={() => setWindUnit('m/s')}
@@ -83,23 +79,21 @@ const Settings = () => {
               className={getToggleClass(windUnit === 'km/h', 'sky')}
               onClick={() => setWindUnit('km/h')}
             >
-              Kilo / Hr (km/h)
+               km/h
             </button>
           </div>
         </div>
 
         {/* ATMOSPHERIC PRESSURE CARD */}
-        <div className="glass rounded-3xl p-6 sm:p-8 flex flex-col gap-6 shadow-xl group hover:-translate-y-1 transition-transform duration-300 lg:col-span-2 max-w-3xl mx-auto w-full">
-          <div className="flex items-center gap-4 border-b border-[var(--card-border)] pb-5">
-            <div className="p-3.5 rounded-xl bg-purple-500/15 text-purple-500 ring-1 ring-purple-500/30 group-hover:bg-purple-500 group-hover:text-white transition-colors duration-300 shadow-inner">
-              <Gauge size={26} strokeWidth={2.5} />
-            </div>
-            <h3 className="text-xl sm:text-2xl font-bold">Atmospheric Pressure</h3>
+        <div className="glass rounded-2xl p-4 sm:p-5 flex flex-col gap-4 shadow-md group mb-4">
+          <div className="flex items-center gap-3 border-b border-[var(--card-border)] pb-3">
+            <Gauge size={22} strokeWidth={2.5} className="text-purple-500" />
+            <h3 className="text-lg font-bold">Atmospheric Pressure</h3>
           </div>
-          <p className="text-[15px] sm:text-base opacity-75 leading-relaxed font-medium">
-            Define base reporting mappings for barometric pressure metrics.
+          <p className="text-xs sm:text-sm opacity-50 font-medium leading-relaxed">
+            Define base reporting mappings for barometric pressure.
           </p>
-          <div className="flex flex-col sm:flex-row gap-3 mt-2">
+          <div className="flex flex-col sm:flex-row gap-3 mt-3">
             <button
               className={getToggleClass(pressureUnit === 'hPa', 'purple')}
               onClick={() => setPressureUnit('hPa')}
@@ -116,15 +110,16 @@ const Settings = () => {
         </div>
       </div>
 
-      <div className="mt-14 flex justify-center md:justify-start">
+      <div className="mt-8 mb-6 flex items-center justify-center">
         <button 
-          className="flex items-center gap-2.5 py-4 px-8 rounded-2xl font-bold text-[17px] transition-all duration-300 bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white hover:shadow-lg hover:shadow-red-500/30 active:scale-95 group"
+          className="w-full sm:w-auto flex items-center justify-center gap-2 py-3 px-6 rounded-xl font-bold text-sm transition-all duration-300 bg-red-500/10 text-red-500 border border-red-500/20 hover:bg-red-500 hover:text-white"
           onClick={resetToDefault}
         >
-          <RotateCcw size={24} strokeWidth={2.5} className="group-hover:-rotate-180 transition-transform duration-500" /> 
+          <RotateCcw size={18} strokeWidth={2.5} /> 
           Reset Default Settings
         </button>
       </div>
+    </div>
     </div>
   );
 };

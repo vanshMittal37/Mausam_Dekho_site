@@ -149,76 +149,70 @@ const Navbar = ({ theme, toggleTheme }) => {
 
       {/* ── MOBILE DRAWER PANEL (Slides from Left below Navbar) ── */}
       <div 
-        className={`md:hidden fixed top-[68px] left-0 h-[calc(100vh-68px)] w-[82%] max-w-[320px] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out z-[999] border-r ${
+        className={`md:hidden fixed top-[68px] left-0 h-[calc(100vh-68px)] w-[80%] max-w-[300px] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out z-[999] border-r ${
           isLight 
             ? 'bg-white border-slate-200' 
-            : 'bg-gradient-to-b from-[#0f172a] to-[#1e293b] border-slate-800'
+            : 'bg-[#0f172a] border-slate-800'
         } backdrop-blur-xl ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        <div className="flex-1 px-5 py-10 overflow-y-auto">
+        <div className="flex-1 p-4 overflow-y-auto flex flex-col">
           {/* Main Menu Section */}
-          <div className="flex flex-col gap-3 mb-10">
-            <span className="px-4 py-1 text-[12px] font-bold uppercase tracking-[0.25em] text-blue-500/80 mb-4 ml-1">
+          <div className="flex flex-col gap-3">
+            <span className="mt-4 px-4 py-1 text-[10px] font-bold uppercase tracking-widest opacity-50">
               Navigation
             </span>
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-1.5 px-1">
               {NAV_LINKS.map(({ name, path, icon: Icon }) => (
                 <Link key={path} to={path} className={getDrawerLinkClass(path)}>
-                  <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive(path) ? 'bg-white/25 shadow-sm' : 'bg-transparent group-hover:bg-white/10'}`}>
-                    <Icon size={22} strokeWidth={2.5} />
-                  </div>
-                  <span className="flex-1 ml-1">{name}</span>
+                  <Icon size={20} className="flex-shrink-0" />
+                  <span>{name}</span>
                 </Link>
               ))}
             </div>
           </div>
 
-          <div className={`my-10 mx-6 border-t ${isLight ? 'border-slate-100' : 'border-white/5'}`} />
-
           {/* Configuration Section */}
-          <div className="flex flex-col gap-3 mb-10">
-            <span className="px-4 py-1 text-[12px] font-bold uppercase tracking-[0.25em] text-blue-500/80 mb-4 ml-1">
+          <div className="flex flex-col gap-3 mt-4">
+            <span className="px-4 py-1 text-[10px] font-bold uppercase tracking-widest opacity-50">
               Configuration
             </span>
-            <div className="flex flex-col gap-3">
+            <div className="flex flex-col gap-1.5 px-1">
               <Link to="/settings" className={getDrawerLinkClass('/settings')}>
-                <div className={`p-2.5 rounded-xl transition-all duration-300 ${isActive('/settings') ? 'bg-white/25 shadow-sm' : 'bg-transparent group-hover:bg-white/10'}`}>
-                  <Settings size={22} strokeWidth={2.5} />
-                </div>
-                <span className="flex-1 ml-1">Dashboard Settings</span>
+                <Settings size={20} className="flex-shrink-0" />
+                <span>Settings</span>
               </Link>
               
-              <div className="mt-4">
+              <div className="px-2 mt-2">
                 <button
                   onClick={toggleTheme}
-                  className={`flex items-center justify-between w-full px-5 py-5 rounded-2xl text-[16px] font-bold transition-all duration-300 group ${
+                  className={`flex items-center justify-between w-full py-3 px-4 rounded-xl text-sm font-bold transition-all duration-300 ${
                     isLight
-                      ? 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/50 shadow-sm'
-                      : 'bg-white/5 text-slate-200 hover:bg-white/10 border border-white/5 shadow-inner'
+                      ? 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-100'
+                      : 'bg-white/5 text-slate-200 hover:bg-white/10'
                   }`}
                 >
-                  <div className="flex items-center gap-4">
-                    <div className={`p-2 rounded-lg ${isLight ? 'bg-white shadow-sm' : 'bg-white/5'}`}>
-                      {isLight ? <Moon size={20} className="text-blue-600" /> : <Sun size={20} className="text-amber-400" />}
-                    </div>
+                  <div className="flex items-center gap-3">
+                    {isLight ? <Moon size={16} /> : <Sun size={16} />}
                     <span>{isLight ? 'Dark Mode' : 'Light Mode'}</span>
                   </div>
-                  <div className={`w-12 h-7 rounded-full transition-all duration-500 flex items-center px-1.5 ${isLight ? 'bg-slate-300' : 'bg-blue-600 shadow-lg shadow-blue-500/20'}`}>
-                    <div className={`w-4 h-4 rounded-full bg-white shadow-lg transition-transform duration-500 cubic-bezier(0.34, 1.56, 0.64, 1) ${
-                      isLight ? 'translate-x-0' : 'translate-x-5'
+                  <div className={`w-8 h-5 rounded-full transition-colors flex items-center px-1 ${isLight ? 'bg-slate-300' : 'bg-blue-600'}`}>
+                    <div className={`w-3 h-3 rounded-full bg-white transition-transform duration-300 ${
+                      isLight ? 'translate-x-0' : 'translate-x-3'
                     }`} />
                   </div>
                 </button>
               </div>
             </div>
           </div>
-        </div>
-        
-        {/* Footer info or version */}
-        <div className="p-8 text-[11px] font-bold uppercase tracking-[0.3em] opacity-30 text-center border-t border-white/5 bg-black/5">
-          Vansh Mittal • v1.2.0
+
+          {/* Footer */}
+          <div className="mt-auto pt-6 pb-4 border-t border-white/5">
+             <p className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-20 text-center">
+               Vansh Mittal • v1.2.5
+             </p>
+          </div>
         </div>
       </div>
     </header>
