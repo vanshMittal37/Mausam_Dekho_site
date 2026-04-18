@@ -140,16 +140,16 @@ const Navbar = ({ theme, toggleTheme }) => {
 
       {/* ── MOBILE DRAWER OVERLAY ── */}
       <div 
-        className={`md:hidden fixed inset-0 w-full h-full bg-black/40 backdrop-blur-sm transition-opacity duration-300 ease-in-out ${
+        className={`md:hidden fixed inset-0 top-[68px] w-full h-[calc(100vh-68px)] bg-black/40 backdrop-blur-sm transition-opacity duration-300 ease-in-out z-[998] ${
           isOpen ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'
         }`}
         onClick={() => setIsOpen(false)}
         aria-hidden="true"
       />
 
-      {/* ── MOBILE DRAWER PANEL (Slides from Left) ── */}
+      {/* ── MOBILE DRAWER PANEL (Slides from Left below Navbar) ── */}
       <div 
-        className={`md:hidden fixed top-0 left-0 h-full w-[78%] max-w-[300px] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out z-[1000] border-r ${
+        className={`md:hidden fixed top-[68px] left-0 h-[calc(100vh-68px)] w-[82%] max-w-[320px] flex flex-col shadow-2xl transition-transform duration-300 ease-in-out z-[999] border-r ${
           isLight 
             ? 'bg-white border-slate-200' 
             : 'bg-gradient-to-b from-[#0f172a] to-[#1e293b] border-slate-800'
@@ -157,63 +157,58 @@ const Navbar = ({ theme, toggleTheme }) => {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
       >
-        {/* Drawer Header */}
-        <div className="p-5 flex items-center gap-3 border-b border-white/5">
-          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-400 flex items-center justify-center text-white shadow-lg shadow-blue-500/20">
-            <CloudSun size={24} strokeWidth={2.5} />
-          </div>
-          <div>
-            <h2 className={`text-lg font-bold leading-tight ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              Mausam <span className="text-blue-500">Dekho</span>
-            </h2>
-          </div>
-        </div>
-
-        <div className="flex-1 px-3 py-4 overflow-y-auto">
+        <div className="flex-1 px-4 py-8 overflow-y-auto">
           {/* Main Menu Section */}
-          <div className="flex flex-col gap-1">
-            <span className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider opacity-40">Main Menu</span>
+          <div className="flex flex-col gap-2">
+            <span className="px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.2em] opacity-40 mb-2">Navigation</span>
             {NAV_LINKS.map(({ name, path, icon: Icon }) => (
               <Link key={path} to={path} className={getDrawerLinkClass(path)}>
-                <Icon size={20} strokeWidth={2.5} className={`${isActive(path) ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'} transition-opacity`} />
-                <span>{name}</span>
+                <div className={`p-2 rounded-lg transition-colors ${isActive(path) ? 'bg-white/20' : 'bg-transparent'}`}>
+                  <Icon size={20} strokeWidth={2.5} />
+                </div>
+                <span className="flex-1">{name}</span>
               </Link>
             ))}
           </div>
 
-          <div className={`my-4 border-t ${isLight ? 'border-slate-100' : 'border-white/5'}`} />
+          <div className={`my-8 mx-4 border-t ${isLight ? 'border-slate-100' : 'border-white/5'}`} />
 
-          {/* Options Section */}
-          <div className="flex flex-col gap-1">
-            <span className="px-4 py-2 text-[11px] font-bold uppercase tracking-wider opacity-40">Options</span>
+          {/* Configuration Section */}
+          <div className="flex flex-col gap-2">
+            <span className="px-4 py-1 text-[11px] font-extrabold uppercase tracking-[0.2em] opacity-40 mb-2">Configuration</span>
             <Link to="/settings" className={getDrawerLinkClass('/settings')}>
-              <Settings size={20} strokeWidth={2.5} className={`${isActive('/settings') ? 'opacity-100' : 'opacity-60 group-hover:opacity-100'} transition-opacity`} />
-              <span>Settings</span>
+              <div className={`p-2 rounded-lg transition-colors ${isActive('/settings') ? 'bg-white/20' : 'bg-transparent'}`}>
+                <Settings size={20} strokeWidth={2.5} />
+              </div>
+              <span className="flex-1">App Settings</span>
             </Link>
             
-            <button
-              onClick={toggleTheme}
-              className={`flex items-center gap-3.5 w-full px-4 py-3 rounded-xl text-[16px] font-semibold transition-all duration-300 ${
-                isLight
-                  ? 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                  : 'text-slate-300 hover:text-white hover:bg-white/5'
-              }`}
-            >
-              <div className="relative w-10 h-6 bg-slate-200 dark:bg-slate-800 rounded-full transition-colors flex items-center px-1">
-                <div className={`w-4 h-4 rounded-full transition-transform duration-300 flex items-center justify-center ${
-                  isLight ? 'translate-x-0 bg-white shadow-sm' : 'translate-x-4 bg-blue-500'
-                }`}>
-                   {isLight ? <Moon size={10} className="text-slate-400" /> : <Sun size={10} className="text-white" />}
+            <div className="px-4 mt-4">
+              <button
+                onClick={toggleTheme}
+                className={`flex items-center justify-between w-full px-5 py-4 rounded-2xl text-[15px] font-bold transition-all duration-300 ${
+                  isLight
+                    ? 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-100'
+                    : 'bg-white/5 text-slate-200 hover:bg-white/10 border border-white/5'
+                }`}
+              >
+                <div className="flex items-center gap-3">
+                  {isLight ? <Moon size={18} className="text-blue-600" /> : <Sun size={18} className="text-amber-400" />}
+                  <span>{isLight ? 'Dark Appearance' : 'Light Appearance'}</span>
                 </div>
-              </div>
-              <span>{isLight ? 'Dark Mode' : 'Light Mode'}</span>
-            </button>
+                <div className={`w-10 h-6 rounded-full transition-colors flex items-center px-1 ${isLight ? 'bg-slate-300' : 'bg-blue-600'}`}>
+                  <div className={`w-4 h-4 rounded-full bg-white shadow-sm transition-transform duration-300 ${
+                    isLight ? 'translate-x-0' : 'translate-x-4'
+                  }`} />
+                </div>
+              </button>
+            </div>
           </div>
         </div>
         
         {/* Footer info or version */}
-        <div className="p-5 text-[11px] font-medium opacity-30 text-center">
-          v1.2.0 • Premium Edition
+        <div className="p-6 text-[10px] font-bold uppercase tracking-widest opacity-20 text-center border-t border-white/5">
+          Weather Deck • v1.2.0
         </div>
       </div>
     </header>
