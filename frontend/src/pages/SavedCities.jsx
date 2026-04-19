@@ -1,11 +1,21 @@
-import React, { useState, useEffect } from 'react';
+﻿import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Trash2, RefreshCw, Wind, Droplets, PlusCircle } from 'lucide-react';
+import { Trash2, RefreshCw, Wind, Droplets, PlusCircle, Sunrise, Sunset } from 'lucide-react';
 import { getSavedCities, deleteCity } from '../api/backendApi';
 import { getWeatherByCity, getAqiByCoords } from '../api/weatherApi';
 import { getWeatherTheme, isNightTime } from '../utils/weatherBackgrounds';
 import { useSettings } from '../context/SettingsContext';
 import './SavedCities.css';
+
+/* ── helpers ── */
+const fmt12h = (unixTs, tzOffsetSec) => {
+  const d = new Date((unixTs + tzOffsetSec) * 1000);
+  let h = d.getUTCHours();
+  const m = d.getUTCMinutes().toString().padStart(2, '0');
+  const ampm = h >= 12 ? 'PM' : 'AM';
+  h = h % 12 || 12;
+  return `${h}:${m} ${ampm}`;
+};
 
 // Module-level cache — shared across navigations
 let cache = {
@@ -239,7 +249,24 @@ const SavedCities = ({ setBgClass }) => {
                          <span className="stat-badge"><Wind size={14} /> {formatWind(w.wind.speed)}</span>
                        </div>
                      </div>
-                     {/* AQI Badge */}
+                      {/* Sunrise / Sunset */}
+                      {(w.sys?.sunrise || w.sys?.sunset) && (
+                        <div className="city-sun-row">
+                          {w.sys?.sunrise && (
+                            <div className="city-sun-item">
+                              <Sunrise size={13} className="city-sunrise-icon" />
+                              <span>{fmt12h(w.sys.sunrise, w.timezone ?? 0)}</span>
+                            </div>
+                          )}
+                          {w.sys?.sunset && (
+                            <div className="city-sun-item">
+                              <Sunset size={13} className="city-sunset-icon" />
+                              <span>{fmt12h(w.sys.sunset, w.timezone ?? 0)}</span>
+                            </div>
+                          )}
+                        </div>
+                      )}
+                      {/* AQI Badge */}
                      {aqiData[city._id] && (() => {
                        const info = AQI_INFO[aqiData[city._id]];
                        return (
